@@ -1,0 +1,17 @@
+{
+  "name": "webpanel",
+  "version": "0.0.0",
+  "description": "A lightweight inspect element for Javascript",
+  "author": "PoolloverNathan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PoolloverNathan/webpanel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PoolloverNathan/webpanel/issues"
+  },
+  "homepage": "https://github.com/PoolloverNathan/webpanel#readme",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}
