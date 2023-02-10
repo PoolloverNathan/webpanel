@@ -1,0 +1,34 @@
+<div id="contents">
+  <h1>WebPanel</h1>
+  <hr>
+  <p>WebPanel is a pure JavaScript element inspector that can run from your bookmarks bar. You can install it by dragging the following link to your bookmarks bar:</p>
+  <center><a id="wp_link">WebPanel</a></center>
+</div>
+
+<style>
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+  @media only screen {
+    #contents {
+      height: 100%;
+      width: max(50%, 5in);
+    }
+  }
+  @media only screen and (max-width: 5in) {
+    #contents {
+      width: 100%;
+  }
+</style>
+
+<script>
+  const host = new URL("dist/main.js", location)
+  wp_link.href = `javascript:fetch(${JSON.stringify(host)}).then(res => res.text()).then(code => eval(code)).catch(e => { alert("An error occured loading WebPanel:\n" + e.stack) })`
+  wp_link.onclick = e => {
+    alert("You need to drag the bookmarklet to your bookmarks bar, not click it!")
+    e.preventDefault()
+  }
+</script>
