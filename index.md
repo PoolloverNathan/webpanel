@@ -6,7 +6,7 @@ WebPanel is a pure JavaScript element inspector that can run from your bookmarks
 
 <script>
   const host = new URL("src/main.js", location)
-  wp_link.href = `javascript:fetch(${JSON.stringify(host)}).then(code => eval(code)).catch(e => { alert("An error occured loading WebPanel:\n" + e.stack) })`
+  wp_link.href = `javascript:fetch(${JSON.stringify(host)}).then(res => res.text()).then(code => eval(code)).catch(e => { alert("An error occured loading WebPanel:\n" + e.stack) })`
   wp_link.onclick = e => {
     alert("You need to drag the bookmarklet to your bookmarks bar, not click it!")
     e.preventDefault()
