@@ -1,5 +1,5 @@
 async (main: URL) => {
-  const cache = {}
+  const cache = {} as { [name: string]: Promise<object> }
   const createPromise = <T,E=unknown>() => {
     const early = new Error("resolve or reject was somehow called early, according to the spec this is impossible")
     let resolve: (value: T) => void = () => {
@@ -8,7 +8,7 @@ async (main: URL) => {
     let reject: (error: E) => void = ()=>{
       throw early
     }
-    const promise = new Promise((res, rej) => {
+    const promise = new Promise<T>((res, rej) => {
       resolve = res
       reject = rej
     })
@@ -19,14 +19,13 @@ async (main: URL) => {
   async function require<E extends object>(module: Module | null, target: URL, optional: true): Promise<E | null>
   async function require<E extends object>(module: Module | null, target: URL, optional = false): Promise<E | null> {
     if (target.href in cache) {
-      return cache[target.href] as E
-      const caughtP = cache[target.href].catch(e => {
+      return cache[target.href].catch(e => {
         if (optional) {
           return null
         } else {
           throw e
         }
-      })
+      }) as (typeof optional extends true ? E | null : E)
     }
     const p = createPromise<E>()
     const caughtP = p.promise.catch(e => {
@@ -35,7 +34,7 @@ async (main: URL) => {
       } else {
         throw e
       }
-    })
+    }) as (typeof optional extends true ? E | null : E)
     cache[target.href] = p.promise
     try {
       const res = await fetch(target)
